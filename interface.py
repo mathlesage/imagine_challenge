@@ -196,6 +196,6 @@ if st.button("Exporter les résultats en PDF"):
         pdf.cell(0, 10, txt="Superficie non renseignée ou nulle, calcul de l'empreinte par m² impossible.", ln=1)
     
     # Génération du PDF en mémoire
-    pdf_data = pdf.output(dest="S").encode("latin-1")
+    pdf_data = pdf.output(dest="S").encode("utf-8")
     
     st.download_button("Télécharger le PDF", data=pdf_data, file_name="devis_carbone.pdf", mime="application/pdf")
