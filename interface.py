@@ -191,9 +191,9 @@ if st.button("Exporter les résultats en PDF"):
     
     if superficie > 0:
         co2_par_m2 = total_footprint / superficie
-        pdf.cell(0, 10, txt=f"Empreinte carbone par m2 : {co2_par_m2:.2f} kg CO2/m²", ln=1)
+        pdf.cell(0, 10, txt=f"Empreinte carbone par m2 : {co2_par_m2:.2f} kg CO2/m2", ln=1)
     else:
-        pdf.cell(0, 10, txt="Superficie non renseignée ou nulle, calcul de l'empreinte par m² impossible.", ln=1)
+        pdf.cell(0, 10, txt="Superficie non renseignée ou nulle, calcul de l'empreinte par m2 impossible.", ln=1)
     
     # Génération du PDF en mémoire
     pdf_data = pdf.output(dest="S").encode("utf-8")
