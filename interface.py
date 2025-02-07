@@ -186,7 +186,7 @@ if st.button("Exporter les résultats en PDF"):
         pdf.multi_cell(0, 10, txt=line)
     
     pdf.ln(5)
-    pdf.cell(0, 10, txt=f"Empreinte carbone totale : {total_footprint:.2f} kg CO₂", ln=1)
+    pdf.cell(0, 10, txt=f"Empreinte carbone totale : {total_footprint:.2f} kg CO2", ln=1)
     pdf.cell(0, 10, txt=f"Superficie : {superficie:.2f} m²", ln=1)
     
     if superficie > 0:
