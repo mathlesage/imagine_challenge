@@ -1,6 +1,4 @@
 import streamlit as st
-
-import streamlit as st
 from fpdf import FPDF
 import io
 
@@ -8,7 +6,7 @@ import io
 if 'rows' not in st.session_state:
     st.session_state['rows'] = 1
 
-# Dictionnaire des facteurs d'émission carbone (en kg CO₂ par unité)
+# Dictionnaire des facteurs d'émission carbone (en kg CO2 par unité)
 carbon_factors = {
     "Chemin de câble NIEDAX France MTC H105": 0.0,
     "Isoconfort 35 Revêtu Kraft 240": 4.66,
@@ -97,7 +95,6 @@ carbon_factors = {
     "portail d'entrée": 1.0
 }
 
-
 # Liste des matériaux disponibles (les clés du dictionnaire)
 available_materials = list(carbon_factors.keys())
 
@@ -132,15 +129,15 @@ for i in range(st.session_state['rows']):
 
     st.markdown("---")
 
-# Champ de saisie pour la superficie (en m²)
-superficie = st.number_input("Saisir la superficie (en m²)", min_value=0.0, value=0.0, step=0.1, key="superficie")
+# Champ de saisie pour la superficie (en m2)
+superficie = st.number_input("Saisir la superficie (en m2)", min_value=0.0, value=0.0, step=0.1, key="superficie")
 
 # Bouton pour ajouter une nouvelle ligne de matériau
 if st.button("Ajouter un matériau"):
     add_row()
 
 # Bouton pour calculer l'empreinte carbone
-if st.button("Calculer le CO utilisé"):
+if st.button("Calculer le CO utilise"):
     total_footprint = 0.0
     st.write("### Récapitulatif")
     # Parcours de chaque ligne pour le calcul
@@ -150,16 +147,16 @@ if st.button("Calculer le CO utilisé"):
         if material and material in carbon_factors:
             footprint = quantity * carbon_factors[material]
             total_footprint += footprint
-            st.write(f"**Matériau {i+1}** : {material} — Quantité : {quantity} — Empreinte carbone : {footprint:.2f} kg CO₂")
+            st.write(f"**Matériau {i+1}** : {material} — Quantité : {quantity} — Empreinte carbone : {footprint:.2f} kg CO2")
         else:
             st.write(f"**Matériau {i+1}** : Non renseigné ou matériau inconnu.")
-    st.markdown(f"### Empreinte carbone totale : **{total_footprint:.2f} kg CO₂**")
+    st.markdown(f"### Empreinte carbone totale : **{total_footprint:.2f} kg CO2**")
     
     if superficie > 0:
         co2_par_m2 = total_footprint / superficie
-        st.markdown(f"### Empreinte carbone par m² : **{co2_par_m2:.2f} kg CO₂/m²**")
+        st.markdown(f"### Empreinte carbone par m2 : **{co2_par_m2:.2f} kg CO2/m2**")
     else:
-        st.warning("Superficie non renseignée ou nulle, impossible de calculer l'empreinte carbone par m².")
+        st.warning("Superficie non renseignée ou nulle, impossible de calculer l'empreinte carbone par m2.")
 
 # Bouton pour exporter les résultats dans un PDF
 if st.button("Exporter les résultats en PDF"):
@@ -170,7 +167,7 @@ if st.button("Exporter les résultats en PDF"):
     pdf.set_font("Arial", size=12)
     
     # Titre
-    pdf.cell(0, 10, txt="Devis Matériaux : Calcul de l'Empreinte Carbone", ln=1, align="C")
+    pdf.cell(0, 10, txt="Devis Materiaux : Calcul de l'Empreinte Carbone", ln=1, align="C")
     pdf.ln(5)
     
     # Détails pour chaque matériau
@@ -180,9 +177,10 @@ if st.button("Exporter les résultats en PDF"):
         if material and material in carbon_factors:
             footprint = quantity * carbon_factors[material]
             total_footprint += footprint
-            line = f"Matériau {i+1} : {material} | Quantité : {quantity} | Empreinte : {footprint:.2f} kg CO₂"
+            # Remplacement des caractères spéciaux par des versions compatibles Latin-1
+            line = f"Materiau {i+1} : {material} | Quantite : {quantity} | Empreinte : {footprint:.2f} kg CO2"
         else:
-            line = f"Matériau {i+1} : Non renseigné ou matériau inconnu."
+            line = f"Materiau {i+1} : Non renseigne ou materiau inconnu."
         pdf.multi_cell(0, 10, txt=line)
     
     pdf.ln(5)
@@ -193,9 +191,9 @@ if st.button("Exporter les résultats en PDF"):
         co2_par_m2 = total_footprint / superficie
         pdf.cell(0, 10, txt=f"Empreinte carbone par m2 : {co2_par_m2:.2f} kg CO2/m2", ln=1)
     else:
-        pdf.cell(0, 10, txt="Superficie non renseignée ou nulle, calcul de l'empreinte par m2 impossible.", ln=1)
+        pdf.cell(0, 10, txt="Superficie non renseignee ou nulle, calcul de l'empreinte par m2 impossible.", ln=1)
     
     # Génération du PDF en mémoire
     pdf_data = pdf.output(dest="S").encode("utf-8")
     
-    st.download_button("Télécharger le PDF", data=pdf_data, file_name="devis_carbone.pdf", mime="application/pdf")
+    st.download_button("Telecharger le PDF", data=pdf_data, file_name="devis_carbone.pdf", mime="application/pdf")
