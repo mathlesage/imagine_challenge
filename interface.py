@@ -191,7 +191,7 @@ if st.button("Exporter les résultats en PDF"):
     
     if superficie > 0:
         co2_par_m2 = total_footprint / superficie
-        pdf.cell(0, 10, txt=f"Empreinte carbone par m² : {co2_par_m2:.2f} kg CO₂/m²", ln=1)
+        pdf.cell(0, 10, txt=f"Empreinte carbone par m² : {co2_par_m2:.2f} kg CO2/m²", ln=1)
     else:
         pdf.cell(0, 10, txt="Superficie non renseignée ou nulle, calcul de l'empreinte par m² impossible.", ln=1)
     
